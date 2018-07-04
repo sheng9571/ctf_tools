@@ -1,7 +1,7 @@
 # ctf_tools
 #### Install
 ```
-git clone --recursive https://github.com/sheng9571/ctf_tools ~/.ctf-tools
+git clone --recursive https://github.com/sheng9571/ctf_tools ~/.ctf_tools
 ```
 
 #### Update submodule tools
