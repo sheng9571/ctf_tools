@@ -1,3 +1,9 @@
 [submodule "uncompyle2"]
 	path = uncompyle2
 	url = https://github.com/Mysterie/uncompyle2
+[submodule "pwntools"]
+	path = pwntools
+	url = https://github.com/Gallopsled/pwntools
+[submodule "RsaCtfTool"]
+	path = RsaCtfTool
+	url = https://github.com/Ganapati/RsaCtfTool
