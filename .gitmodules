@@ -7,3 +7,6 @@
 [submodule "RsaCtfTool"]
 	path = RsaCtfTool
 	url = https://github.com/Ganapati/RsaCtfTool
+[submodule "binwalk"]
+	path = binwalk
+	url = https://github.com/ReFirmLabs/binwalk.git
