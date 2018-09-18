@@ -10,3 +10,9 @@
 [submodule "binwalk"]
 	path = binwalk
 	url = https://github.com/ReFirmLabs/binwalk.git
+[submodule "sasquatch"]
+	path = sasquatch
+	url = https://github.com/devttys0/sasquatch.git
+[submodule "rsatool"]
+	path = rsatool
+	url = https://github.com/ius/rsatool.git
