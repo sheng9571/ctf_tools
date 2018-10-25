@@ -1,3 +1,107 @@
 alias pyde='~/.ctf_tools/uncompyle2/scripts/uncompyle2'
 alias rsact='python3 ~/.ctf_tools/RsaCtfTool/RsaCtfTool.py'
 alias rsat='python ~/.ctf_tools/rsatool/rsatool.py'
+alias pyobd='python ~/.ctf_tools/pyobd/pyobd.py'
+
+
+function aslr()
+{
+    if [ -z $1 ]; then
+        cat /proc/sys/kernel/randomize_va_space
+    elif [ $1 = "on" ]; then
+        # full aslr
+        sudo sysctl -w kernel.randomize_va_space=2
+    elif [ $1 = "off" ]; then
+        # close aslr
+        sudo sysctl -w kernel.randomize_va_space=0
+    elif [ $1 = "half" ]; then
+        # stack、mmap()、VDSO aslr
+        sudo sysctl -w kernel.randomize_va_space=1
+    fi
+}
+
+
+# Remove alarm in binary
+rmalarm()
+{
+    if [ -z $1 ]; then
+        echo "Usage: $FUNCNAME <File>"
+    elif [ ! -f $1 ]; then
+        echo "$1 not found!"
+    else
+        sed -i s/alarm/isnan/g "$1"
+    fi
+}
+
+
+# Remove sleep in binary
+rmsleep()
+{
+    if [ -z $1 ]; then
+        echo "Usage: $FUNCNAME <File>"
+    elif [ ! -f $1 ]; then
+        echo "$1 not found!"
+    else
+        sed s/sleep/isnan/g "$1" > $1"_nosleep"
+        chmod +x $1"_nosleep"
+    fi
+}
+
+
+# get pid that belogs to specific process
+function maps()
+{
+    cat /proc/`pidof $1`/maps
+}
+
+
+# nasm assemble x86 & load library
+function na86() {
+    len=${#1};
+
+    if [ "$len" -gt 0 ]; then
+        name="$(echo "$1" | cut -d'.' -f1)";
+        nasm -f elf -o "$name".o $1;
+        ld -m elf_i386 -o "$name" "$name".o;
+    else
+        echo Must give one argument!
+    fi
+}
+
+# nasm assemble x64 & load library
+function na64() {
+    len=${#1};
+
+    if [ "$len" -gt 0 ]; then
+        name="$(echo "$1" | cut -d'.' -f1)";
+        nasm -f elf64 -o "$name".o $1;
+        ld -m elf_x86_64 -o "$name" "$name".o;
+    else
+        echo Must give one argument!
+    fi
+}
+
+
+# gcc compiler x86
+function gc32() {
+    len=${#1};
+    
+    if [ "$len" -gt 0 ]; then
+        name="$(echo "$1" | cut -d'.' -f1)";
+        gcc -m32 -o "$name" $1;
+    else
+        echo Must give one argument!
+    fi
+}
+
+# gcc compiler x64
+function gc64() {
+    len=${#1};
+    
+    if [ "$len" -gt 0 ]; then
+        name="$(echo "$1" | cut -d'.' -f1)";
+        gcc -m64 -o "$name" $1;
+    else
+        echo Must give one argument!
+    fi
+}
