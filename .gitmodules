@@ -16,3 +16,6 @@
 [submodule "rsatool"]
 	path = rsatool
 	url = https://github.com/ius/rsatool.git
+[submodule "qira"]
+	path = qira
+	url = https://github.com/geohot/qira.git
