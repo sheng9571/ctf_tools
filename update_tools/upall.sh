@@ -10,7 +10,7 @@ sudo apt-get install -y sudo man vim tmux zsh git tar unzip openssh-server && \
 # wget、curl、nc、nmap
 sudo apt-get install -y wget curl nmap && \
 # debug tools
-sudo apt-get install -y gdb ltrace strace && \
+sudo apt-get install -y gdb gdbserver ltrace strace && \
 # lxml requirements
 sudo apt-get install -y libxml2-dev libxslt-dev && \
 # x64 run x86 lib
@@ -18,15 +18,15 @@ sudo apt-get install -y gcc-multilib g++-4.8-multilib && \
 # pip2
 sudo pip2 install --upgrade pip && sudo pip install --upgrade requests lxml && \
 # pip3
-sudo pip3 install --upgrade pip && sudo pip3 install --upgrade requests && \
+sudo pip3 install --upgrade pip && \
 # Install ctf tools & update
 cd ~/.ctf_tools && git pull && git submodule update --recursive && git pull --recurse-submodules && git submodule foreach --recursive 'git pull origin master || :' && git submodule foreach --recursive 'git pull origin dev || :' && cd ~ && \
 # Install pwntools
-sudo pip install --upgrade pwntools && \
+sudo pip2 install --upgrade pwntools && \
 # Install uncompyle2
 cd ~/.ctf_tools/uncompyle2 && sudo python setup.py install && cd ~ && \
 # Install ROPGadget
-sudo pip install capstone && sudo pip install --upgrade ropgadget && \
+sudo pip2 install capstone && sudo pip2 install --upgrade ropgadget && \
 # Install RsaCtfTool
 sudo apt install -y libgmp-dev libmpfr-dev libmpc-dev python3-gmpy2 && cd ~/.ctf_tools/RsaCtfTool && sudo pip install -r requirements.txt && sudo pip3 install --upgrade pycrypto && cd ~ && \
 # Install binwalk
