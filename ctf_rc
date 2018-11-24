@@ -2,6 +2,8 @@ alias pyde='~/.ctf_tools/uncompyle2/scripts/uncompyle2'
 alias rsact='python3 ~/.ctf_tools/RsaCtfTool/RsaCtfTool.py'
 alias rsat='python ~/.ctf_tools/rsatool/rsatool.py'
 alias pyobd='python ~/.ctf_tools/pyobd/pyobd.py'
+alias ropg='ROPgadget'
+alias upall='~/.ctf_tools/update_tools/upall.sh'
 
 
 function aslr()
