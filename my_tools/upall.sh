@@ -27,6 +27,8 @@ sudo pip2 install --upgrade pwntools && \
 cd ~/.ctf_tools/uncompyle2 && sudo python setup.py install && cd ~ && \
 # Install ROPGadget
 sudo pip2 install capstone && sudo pip2 install --upgrade ropgadget && \
+# Install one_gadget
+sudo gem install one_gadget && \
 # Install Radare2
 cd ~/.ctf_tools/radare2/sys/ && ./install.sh && \
 # Install RsaCtfTool
