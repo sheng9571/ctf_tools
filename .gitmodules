@@ -19,3 +19,6 @@
 [submodule "qira"]
 	path = qira
 	url = https://github.com/geohot/qira.git
+[submodule "ROPgadget"]
+	path = ROPgadget
+	url = https://github.com/JonathanSalwan/ROPgadget.git
