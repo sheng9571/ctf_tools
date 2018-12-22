@@ -33,7 +33,7 @@ rmalarm()
     elif [ ! -f $1 ]; then
         echo "$1 not found!"
     else
-        sed -i s/alarm/isnan/g "$1" > $1"_noalarm"
+        sed s/alarm/isnan/g "$1" > $1"_noalarm"
         chmod +x $1"_noalarm"
     fi
 }
