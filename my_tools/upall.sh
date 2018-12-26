@@ -20,8 +20,7 @@ sudo pip2 install --upgrade pip && sudo pip install --upgrade requests lxml && \
 # pip3
 sudo pip3 install --upgrade pip && \
 # update gef
-wget -vO ~/gef.py https://github.com/hugsy/gef/raw/master/gef.py && \
-mv ~/gef.py ~/.dotfiles/gdb/gef.py && \
+wget -vO ~/.ctf_tools/gdb/gef.py https://github.com/hugsy/gef/raw/master/gef.py && \
 # Install ctf tools & update
 cd ~/.ctf_tools && git pull && git submodule update --recursive && git pull --recurse-submodules && git submodule foreach --recursive 'git pull origin master || :' && git submodule foreach --recursive 'git pull origin dev || :' && cd ~ && \
 # Install pwntools
