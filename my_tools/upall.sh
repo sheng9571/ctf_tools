@@ -19,8 +19,6 @@ sudo apt-get install -y gcc-multilib g++-4.8-multilib && \
 sudo pip2 install --upgrade pip && sudo pip install --upgrade requests lxml && \
 # pip3
 sudo pip3 install --upgrade pip && \
-# update gef
-wget -vO ~/.ctf_tools/gdb/gef.py https://github.com/hugsy/gef/raw/master/gef.py && \
 # Install ctf tools & update
 cd ~/.ctf_tools && git pull && git submodule update --recursive && git pull --recurse-submodules && git submodule foreach --recursive 'git pull origin master || :' && git submodule foreach --recursive 'git pull origin dev || :' && cd ~ && \
 # Install pwntools
@@ -33,6 +31,10 @@ sudo pip2 install capstone && sudo pip2 install --upgrade ropgadget && \
 sudo gem install one_gadget && \
 # Install Radare2
 cd ~/.ctf_tools/radare2/sys/ && ./install.sh && \
+# update gef
+wget -vO ~/.ctf_tools/gdb/gef.py https://github.com/hugsy/gef/raw/master/gef.py && \
+# update checksec
+wget -vO ~/.ctf_tools/checksec/chsec https://github.com/slimm609/checksec.sh/raw/master/checksec && chmod +x ~/.ctf_tools/checksec/chsec && cp ~/.ctf_tools/checksec/chsec /usr/local/bin/chsec && \
 # Install RsaCtfTool
 sudo apt install -y libgmp-dev libmpfr-dev libmpc-dev python3-gmpy2 && cd ~/.ctf_tools/RsaCtfTool && sudo pip install -r requirements.txt && sudo pip3 install --upgrade pycrypto && cd ~ && \
 # Install binwalk
