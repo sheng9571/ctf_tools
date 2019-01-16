@@ -145,7 +145,7 @@ res.append('angr (python 2): %s' % angr)
 cmd = 'pip freeze | grep z3'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
 r = p.communicate()
-z3 = r[0].strip().split(' ')[1]
+z3 = r[0].strip().split('==')[1]
 res.append('z3 (python 2): %s' % z3)
 
 cmd = 'r2 -version'
