@@ -154,6 +154,12 @@ r = p.communicate()
 r2 = r[0].strip().split(' ')[1]
 res.append('radare2: %s' % r2)
 
+cmd = 'pin'
+p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
+r = p.communicate()
+pin = r[0].strip().split('\n')[1].replace('Pin: ', '').strip()
+res.append('Intel pin: %s' % pin)
+
 cmd = 'ROPgadget -v'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
 r = p.communicate()
