@@ -8,6 +8,7 @@ alias upall='~/.ctf_tools/my_tools/upall.sh'
 alias info='python ~/.ctf_tools/my_tools/info.py'
 alias chsec='~/.ctf_tools/checksec/chsec --file'
 alias afl='afl-gcc'
+alias pin='/opt/pin/pin'
 
 
 function aslr()
