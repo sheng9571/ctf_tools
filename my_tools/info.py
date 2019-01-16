@@ -136,6 +136,18 @@ r = p.communicate()
 pwntools2 = r[0].strip().split('==')[1]
 res.append('pwntools (python 2): %s' % pwntools2)
 
+cmd = 'pip2 freeze | grep angr'
+p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
+r = p.communicate()
+angr = r[0].strip().split('==')[1]
+res.append('angr (python 2): %s' % angr)
+
+cmd = 'pip freeze | grep z3'
+p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
+r = p.communicate()
+z3 = r[0].strip().split(' ')[1]
+res.append('z3 (python 2): %s' % z3)
+
 cmd = 'r2 -version'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
 r = p.communicate()

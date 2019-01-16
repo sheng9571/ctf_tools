@@ -25,3 +25,6 @@
 [submodule "radare2"]
 	path = radare2
 	url = https://github.com/radare/radare2.git
+[submodule "z3"]
+	path = z3
+	url = https://github.com/Z3Prover/z3

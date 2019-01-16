@@ -7,6 +7,7 @@ alias oneg='one_gadget'
 alias upall='~/.ctf_tools/my_tools/upall.sh'
 alias info='python ~/.ctf_tools/my_tools/info.py'
 alias chsec='~/.ctf_tools/checksec/chsec --file'
+alias afl='afl-gcc'
 
 
 function aslr()

@@ -21,20 +21,25 @@ sudo pip2 install --upgrade pip && sudo pip install --upgrade requests lxml && \
 sudo pip3 install --upgrade pip && \
 # Install ctf tools & update
 cd ~/.ctf_tools && git pull && git submodule update --recursive && git pull --recurse-submodules && git submodule foreach --recursive 'git pull origin master || :' && git submodule foreach --recursive 'git pull origin dev || :' && cd ~ && \
+echo update pwn tools && \
 # Install pwntools
 sudo pip2 install --upgrade pwntools && \
-# Install uncompyle2
-cd ~/.ctf_tools/uncompyle2 && sudo python setup.py install && cd ~ && \
-# Install ROPGadget
-sudo pip2 install capstone && sudo pip2 install --upgrade ropgadget && \
-# Install one_gadget
-sudo gem install one_gadget && \
 # Install Radare2
 cd ~/.ctf_tools/radare2/sys/ && ./install.sh && \
 # update gef
 wget -vO ~/.ctf_tools/gdb/gef.py https://github.com/hugsy/gef/raw/master/gef.py && \
+# Install ROPGadget
+sudo pip2 install capstone && sudo pip2 install --upgrade ropgadget && \
+# Install one_gadget
+sudo gem install one_gadget && \
 # update checksec
 wget -vO ~/.ctf_tools/checksec/chsec https://github.com/slimm609/checksec.sh/raw/master/checksec && chmod +x ~/.ctf_tools/checksec/chsec && cp ~/.ctf_tools/checksec/chsec /usr/local/bin/chsec && \
+echo update reverse tools && \
+# Install angr
+sudo pip install --upgrade angr && \
+# Install z3
+cd ~/.ctf_tools/z3 && sudo python scripts/mk_make.py && cd build && make && sudo make install && \
+echo update crypto tools && \
 # Install RsaCtfTool
 sudo apt install -y libgmp-dev libmpfr-dev libmpc-dev python3-gmpy2 && cd ~/.ctf_tools/RsaCtfTool && sudo pip install -r requirements.txt && sudo pip3 install --upgrade pycrypto && cd ~ && \
 # Install binwalk
@@ -45,6 +50,8 @@ cd ~/.ctf_tools/sasquatch && sudo apt-get install -y build-essential liblzma-dev
 cd ~/.ctf_tools/rsatool && sudo python setup.py install && cd ~ && \
 
 # Install Misc Tool
+# Install uncompyle2
+cd ~/.ctf_tools/uncompyle2 && sudo python setup.py install && cd ~ && \
 # ExifTool
 sudo apt-get install -y libimage-exiftool-perl && \
 # pngcheck
