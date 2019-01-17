@@ -124,7 +124,7 @@ r = p.communicate()
 gpp = r[0].strip().split('\n')[0].split(' ')[3]
 res.append('g++: %s' % gpp)
 
-cmd = 'nasm --v'
+cmd = 'nasm -v'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
 r = p.communicate()
 nasm = r[0].strip().split(' ')[2]
