@@ -28,3 +28,9 @@
 [submodule "z3"]
 	path = z3
 	url = https://github.com/Z3Prover/z3
+[submodule "gdb/scripts/qemu"]
+	path = gdb/scripts/qemu
+	url = git://git.qemu.org/qemu.git
+[submodule "qemu"]
+	path = qemu
+	url = git://git.qemu.org/qemu.git
