@@ -89,7 +89,7 @@ class relf(gdb.Command):
 
             res = []
             for i in res_1:
-                res.append('offset: {}\tname: {}'.format(i[0], i[1].replace(arg, '{}{}{}'.format(col_obj.l_red, arg, col_obj.dft))))
+                res.append('offset: {}name: {}'.format(i[0].ljust(15, ' '), i[1].replace(arg, '{}{}{}'.format(col_obj.l_red, arg, col_obj.dft))))
 
 
             for i in res: print(i)
