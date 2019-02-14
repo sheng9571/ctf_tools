@@ -4,7 +4,8 @@ import subprocess
 
 class ldd():
 
-    def __init__(self, f_path):
+    def __init__(self, gdb, f_path):
+        self.gdb = gdb
         self.f_path = f_path
 
 
@@ -12,15 +13,21 @@ class ldd():
     def get_libc(self):
         libc_path = False
 
-        cmd = 'ldd {}'.format(self.f_path)
-        r = subprocess.check_output(cmd, shell = True)
-        r = r.decode('utf-8').strip().split('\n')
+        cmd = 'show environment LD_PRELOAD'
+        r = self.gdb.execute(cmd , to_string = True)
+        r = r.strip()
+        if ('LD_PRELOAD = ' in r):
+            libc_path = r.split(' = ')[1].strip()
+        else:
+            cmd = 'ldd {}'.format(self.f_path)
+            r = subprocess.check_output(cmd, shell = True)
+            r = r.decode('utf-8').strip().split('\n')
 
-        for i in r:
-            i = i.replace('\t', '').strip()
-            if ( 'libc.so.6 => ' in i):
-                libc_path = i.split(' => ')[1].strip().split(' (')[0].strip()
-                break
+            for i in r:
+                i = i.replace('\t', '').strip()
+                if ( 'libc.so.6 => ' in i):
+                    libc_path = i.split(' => ')[1].strip().split(' (')[0].strip()
+                    break
 
         return libc_path
 
