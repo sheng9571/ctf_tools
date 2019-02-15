@@ -8,10 +8,12 @@ from color import color
 from proc_pid import proc_pid
 # get binary full path
 from bin_path import bin_path
-# file info model
+# file info module
 from file_info import file_info
-# linux process map parse model
+# linux process map parse module
 from linux_map import linux_map
+# strings libc module
+from strings import strings
 
 
 # list some useful function & variable addrss
@@ -150,6 +152,11 @@ class magic(gdb.Command):
             read = self.gdb_px('read', bit)[0]
             puts = self.gdb_px('puts', bit)[0]
             bin_sh = self.gdb_find_str(libc_base, libc_text_end, '/bin/sh')
+            if(bin_sh == 'null'):
+                l_str = strings(gdb, f_path)
+                bin_sh = l_str.find('/bin/sh')[0].split('name: ')[0].strip().replace('offset: ', '').strip()
+                bin_sh = hex( int(libc_base, 16) + int(bin_sh, 16) )
+                del l_str
 
             print ( '{}: {}'.format('libc base', libc_base) )
             print ( '{}: {}'.format('code base', code_base) )
