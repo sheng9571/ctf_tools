@@ -63,6 +63,41 @@ class cmd(gdb.Command):
         lst.append(tmp)
         tmp = {}
 
+        # 8. use readelf command to get specific function's offset
+        tmp['name'] = 'alias of readelf'
+        tmp['disc'] = 'use readelf command to get specific function's offset'
+        tmp['use'] = 'relf system'
+        lst.append(tmp)
+        tmp = {}
+
+        # 9. convert hex to binary
+        tmp['name'] = 'convert hex to binary'
+        tmp['disc'] = 'convert hex to binary'
+        tmp['use'] = 'h2b 0x1'
+        lst.append(tmp)
+        tmp = {}
+
+        # 10. get entry point
+        tmp['name'] = 'get binary\'s entry point'
+        tmp['disc'] = 'get binary\'s entry point'
+        tmp['use'] = 'ep'
+        lst.append(tmp)
+        tmp = {}
+
+        # 11. break to *main & run
+        tmp['name'] = 'break to *main & run'
+        tmp['disc'] = 'set the break point at *main and start the process'
+        tmp['use'] = 'bm'
+        lst.append(tmp)
+        tmp = {}
+
+        # 12. search specific string in libc
+        tmp['name'] = 'search specific string in libc'
+        tmp['disc'] = 'use strings command to search specific string in libc'
+        tmp['use'] = 'libc_str /bin/sh'
+        lst.append(tmp)
+        tmp = {}
+
         for i in lst:
             print('{} - {} - usage: {}'.format(i['name'], i['disc'], i['use']) )
 
