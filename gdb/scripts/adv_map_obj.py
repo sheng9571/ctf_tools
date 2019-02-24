@@ -75,7 +75,7 @@ class adv_map_obj():
         target = 'Perm'
         tmp.append(target.ljust( 4, ' '))
         target = 'Section'
-        tmp.append(target.ljust( 30, ' '))
+        tmp.append(target.ljust( 25, ' '))
         target = 'Segment'
         tmp.append(target)
         tmp[0] = tmp[0].replace('Start', '{}Start{}'.format(col_obj.orange, col_obj.dft))
@@ -83,7 +83,7 @@ class adv_map_obj():
         tmp[2] = tmp[2].replace('Offset', '{}Offset{}'.format(col_obj.orange, col_obj.dft))
         tmp[3] = tmp[3].replace('Perm', '{}Perm{}'.format(col_obj.orange, col_obj.dft))
         tmp[4] = tmp[4].replace('Section', '{}Section{}'.format(col_obj.orange, col_obj.dft))
-        tmp[4] = tmp[4].replace('Segment', '{}Segment{}'.format(col_obj.orange, col_obj.dft))
+        tmp[5] = tmp[5].replace('Segment', '{}Segment{}'.format(col_obj.orange, col_obj.dft))
         res.append(tmp)
 
         for i in range(len(g_files)):
@@ -251,6 +251,113 @@ class adv_map_obj():
                                         # print(tmp)
                                         res.append(tmp)
                         
+
+        res1 = []
+        res1.append(res[0])
+
+        # add some section that doesn't include in gdb_files
+        for i in merged_map:
+            i = i.split(' ')
+            str_addr = int(i[0].strip(), 16)
+            end_addr = int(i[1].strip(), 16)
+            tmp = []
+
+            # group
+            for j in range(1, len(res)):
+                tmp_str_addr = int(res[j][0].strip(), 16)
+                tmp_end_addr = int(res[j][1].strip(), 16)
+                if ( (tmp_str_addr >= str_addr) and (tmp_end_addr <= end_addr) ): tmp.append(res[j])
+
+
+            if(len(tmp) == 0):
+                lst = []
+                # Start Address
+                target = '0x{}'.format(self.addr_pad(pad, hex(str_addr).replace('0x', '')))
+                lst.append(target.ljust( (pad * 2) + 2, ' '))
+                # End Address
+                target = '0x{}'.format(self.addr_pad(pad, hex(end_addr).replace('0x', '')))
+                lst.append(target.ljust( (pad * 2) + 2, ' '))
+                # Offset
+                ofst = i[2].strip()
+                lst.append(ofst.ljust( (pad * 2) + 2, ' '))
+                # Permission
+                perm = i[3].strip()
+                lst.append(perm.ljust( 4, ' '))
+                # Section
+                section = '[null]'
+                lst.append(section.ljust( 25, ' '))
+                # Segment
+                segment = i[4].strip()
+                if (len(segment) == 0): segment = '[null]'
+                lst.append(segment)
+                res1.append(lst)
+            else:
+                # check all section in group
+                ed = str_addr
+                j = 0
+                while (j < len(tmp)):
+                    tmp_str_addr = int(tmp[j][0].strip(), 16)
+                    tmp_end_addr = int(tmp[j][1].strip(), 16)
+
+                    if ( ed < tmp_str_addr ):
+                        lst = []
+                        # Start Address
+                        str_addr = ed
+                        target = '0x{}'.format(self.addr_pad(pad, hex(str_addr).replace('0x', '')))
+                        lst.append(target.ljust( (pad * 2) + 2, ' '))
+                        # End Address
+                        end_addr = tmp_str_addr
+                        target = '0x{}'.format(self.addr_pad(pad, hex(end_addr).replace('0x', '')))
+                        lst.append(target.ljust( (pad * 2) + 2, ' '))
+                        # Offset
+                        ofst = i[2].strip()
+                        lst.append(ofst.ljust( (pad * 2) + 2, ' '))
+                        # Permission
+                        perm = i[3].strip()
+                        lst.append(perm.ljust( 4, ' '))
+                        # Section
+                        section = '[null]'
+                        lst.append(section.ljust( 25, ' '))
+                        # Segment
+                        segment = i[4].strip()
+                        if (len(segment) == 0): segment = '[null]'
+                        lst.append(segment)
+                        # print(lst)
+                        res1.append(lst)
+                        res1.append(tmp[j])
+                    else: res1.append(tmp[j])
+                    
+                    ed = tmp_end_addr
+                    j += 1
+
+                    # last empty section
+                    if (j == len(tmp)):
+                        if (ed < end_addr):
+                            lst = []
+                            # Start Address
+                            str_addr = ed
+                            target = '0x{}'.format(self.addr_pad(pad, hex(str_addr).replace('0x', '')))
+                            lst.append(target.ljust( (pad * 2) + 2, ' '))
+                            # End Address
+                            target = '0x{}'.format(self.addr_pad(pad, hex(end_addr).replace('0x', '')))
+                            lst.append(target.ljust( (pad * 2) + 2, ' '))
+                            # Offset
+                            ofst = i[2].strip()
+                            lst.append(ofst.ljust( (pad * 2) + 2, ' '))
+                            # Permission
+                            perm = i[3].strip()
+                            lst.append(perm.ljust( 4, ' '))
+                            # Section
+                            section = '[null]'
+                            lst.append(section.ljust( 25, ' '))
+                            # Segment
+                            segment = i[4].strip()
+                            if (len(segment) == 0): segment = '[null]'
+                            lst.append(segment)
+                            res1.append(lst)
+                    
+        res = res1
+        del res1
 
         for i in range(len(res)): res[i] = ' '.join(res[i])
 

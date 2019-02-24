@@ -8,6 +8,8 @@ from color import color
 from proc_pid import proc_pid
 # get binary full path
 from bin_path import bin_path
+# file info module
+from file_info import file_info
 
 
 # show memory map
@@ -43,6 +45,11 @@ class plt_parse(gdb.Command):
 
             col_obj = color()
 
+            f_info = file_info(f_path)
+            arch = f_info.get_arch()
+            bit = f_info.get_bit()
+            del f_info
+
             cmd = 'x/i {}'.format(arg.strip())
             r = gdb.execute(cmd, to_string = True)
             r = r.strip()
@@ -50,7 +57,9 @@ class plt_parse(gdb.Command):
             if ( not ('# 0x' in r) ): raise Exception('please give a valid plt address!')
             got = r.split('# ')[1].strip()
 
-            cmd = 'x/gx {}'.format(got)
+            if (bit == '32'): kw = 'w'
+            elif (bit == '64'): kw = 'g'
+            cmd = 'x/{}x {}'.format(kw, got)
             r = gdb.execute(cmd, to_string = True)
             r = r.strip()
 
