@@ -67,7 +67,7 @@ class libc(gdb.Command):
             col_obj = color()
 
             libc_base, libc_text_idx = self.get_libc_base(l_map, bit)
-            if (len(libc.strip()) == 0): raise Exception('could not get libc path!')
+            if (len(libc_base.strip()) == 0): raise Exception('could not get libc path!')
             del l_map
 
             libc = ldd(gdb, f_path).get_libc()
