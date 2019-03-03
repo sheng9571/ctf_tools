@@ -34,3 +34,6 @@
 [submodule "qemu"]
 	path = qemu
 	url = git://git.qemu.org/qemu.git
+[submodule "gef"]
+	path = gef
+	url = https://github.com/hugsy/gef
