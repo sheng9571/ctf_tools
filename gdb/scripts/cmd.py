@@ -121,7 +121,21 @@ class cmd(gdb.Command):
         lst.append(tmp)
         tmp = {}
 
+        # 15. search an address that belongs to which section & segment
+        tmp['name'] = 'search an address in memory map'
+        tmp['disc'] = 'search an address that belongs to which section & segment'
+        tmp['use'] = '{}asch{} {}0x601070{}'.format(col_obj.yellow, col_obj.dft, col_obj.l_cyan, col_obj.dft)
+        lst.append(tmp)
+        tmp = {}
 
+        # 16. search an value or string in memory
+        tmp['name'] = 'search an value or string'
+        tmp['disc'] = 'search an value or string in memory, and recursively search the pointer that point to it'
+        tmp['use'] = '{}ssch{} {}0x11223344{}'.format(col_obj.yellow, col_obj.dft, col_obj.l_cyan, col_obj.dft)
+        lst.append(tmp)
+        tmp = {}
+        
+        
         for i in lst:
             print('{} - {} - usage: {}'.format(i['name'], i['disc'], i['use']) )
 
