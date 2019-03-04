@@ -12,7 +12,7 @@ cat ctf_rc >> ~/.bashrc
 
 #### Update submodule tools
 ```
-git submodule update --recursive
+git submodule update --init --recursive
 git pull --recurse-submodules
 git submodule foreach --recursive 'git pull origin master || :'
 git submodule foreach --recursive 'git pull origin dev || :'
