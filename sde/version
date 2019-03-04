@@ -1,0 +1,12 @@
+# https://software.intel.com/en-us/articles/intel-software-development-emulator
+sde-8.33.0
+
+# sde tutorial
+# https://software.intel.com/en-us/blogs/2012/06/04/write-your-first-program-with-haswell-new-instructions
+
+# execute elf
+sde/sde64 -- ./onewrite
+
+# debug with gdb
+sde/sde64 -debug -- ./onewrite
+gdb target remote:xxxxx
