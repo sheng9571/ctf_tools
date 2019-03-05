@@ -11,8 +11,6 @@ sudo apt-get install -y sudo man vim tmux zsh git tar unzip openssh-server && \
 sudo apt-get install -y wget curl nmap && \
 # debug tools
 sudo apt-get install -y gdb gdbserver ltrace strace && \
-# lxml requirements
-sudo apt-get install -y libxml2-dev libxslt-dev && \
 # x64 run x86 lib
 sudo apt-get install -y gcc-multilib g++-4.8-multilib && \
 # pip2
@@ -38,10 +36,14 @@ sudo pip2 install capstone && sudo pip2 install --upgrade ropgadget && \
 sudo gem install one_gadget && \
 # Update checksec
 wget -vO ~/.ctf_tools/checksec/chsec https://github.com/slimm609/checksec.sh/raw/master/checksec && chmod +x ~/.ctf_tools/checksec/chsec && cp ~/.ctf_tools/checksec/chsec /usr/local/bin/chsec && \
+# we musl remove lxml requirements, it will let some error occurred when building QEMU
+sudo apt-get remove -y --purge libxml2-dev libxslt-dev && \
 # Update QEMU
-sudo apt-get install -y binfmt-support pkg-config libglib2.0-dev libpixman-1-dev flex bison && cd ~/.ctf_tools/qemu && ./configure --prefix=$(cd ..; pwd)/qemu-user-static --static --disable-system --enable-linux-user --enable-debug --target-list=i386-linux-user,x86_64-linux-user,arm-linux-user,aarch64-linux-user,mips-linux-user,mipsel-linux-user,mips64-linux-user,mips64el-linux-user && sudo make -j8 && sudo make install && cd ../qemu-user-static/bin && for i in *; do mv $i $i-static; done && mkdir /usr/local/bin/qemu && cp -rf * /usr/local/bin/qemu && cd ~ && \
+sudo apt-get install -y binfmt-support pkg-config libglib2.0-dev libpixman-1-dev flex bison && cd ~/.ctf_tools/qemu && git submodule update --init --recursive && ./configure --prefix=$(cd ..; pwd)/qemu-user-static --static --disable-system --enable-linux-user --enable-debug --target-list=i386-linux-user,x86_64-linux-user,arm-linux-user,aarch64-linux-user,mips-linux-user,mipsel-linux-user,mips64-linux-user,mips64el-linux-user && sudo make -j8 && sudo make install && cd ../qemu-user-static/bin && for i in *; do mv $i $i-static; done && mkdir /usr/local/bin/qemu && cp -rf * /usr/local/bin/qemu && cd ~ && \
 # Update cross lib
 sudo apt-get install -y libc6-armel-cross libc6-armhf-cross libc6-arm64-cross libc6-mipsel-cross libc6-mips-cross libc6-mips64-cross libc6-mips64el-cross libc6-mipsn32-mips64-cross libc6-mipsn32-mips64el-cross
+# lxml requirements
+sudo apt-get install -y libxml2-dev libxslt-dev && \
 
     
 echo update reverse tools && \
@@ -56,8 +58,7 @@ tar -zxvf ~/.ctf_tools/afl/afl.tar.gz -C ~/ && cd ~/afl && make && sudo make ins
 # Update intel pin
 tar -zxvf ~/.ctf_tools/pin/pin.tar.gz -C /opt/ && cd ~/ && ln -fs /opt/pin/pin /usr/local/bin/pin && \
 # Update intel sde (software development emulator)
- tar -zxvf ~/.ctf_tools/sde/sde.tar.gz -C /opt/ && cd ~/ && ln -fs /opt/sde/sde /usr/local/sde/sde && ln -fs /opt/sde/sde64 /usr/local/sde/sde64 && \
-tar -zxvf ~/.ctf_tools/pin/pin.tar.gz -C /opt/ && cd ~/ && ln -fs /opt/pin/pin /usr/local/bin/pin && \
+tar -zxvf ~/.ctf_tools/sde/sde.tar.gz -C /opt/ && cd ~/ && ln -fs /opt/sde/sde /usr/local/bin/sde && ln -fs /opt/sde/sde64 /usr/local/bin/sde64 && \
 
     
 echo update crypto tools && \
@@ -79,6 +80,7 @@ sudo apt-get install -y pngcheck && \
 sudo apt-get install -y ruby && sudo gem install rubygems-update && sudo update_rubygems && sudo gem install rake -v 12.2.1 && sudo gem install rainbow -v 2.2.2 && sudo gem install zsteg && \
 
 # update my own scripts
+cp -rf ~/.ctf_tools/my_tools ~/tools/ && \
 cp -rf ~/.ctf_tools/pyobd ~/tools/my_tools/ && \
 
 # clean
