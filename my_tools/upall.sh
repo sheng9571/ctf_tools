@@ -10,7 +10,7 @@ sudo apt-get install -y sudo man vim tmux zsh git tar unzip openssh-server && \
 # wget、curl、nc、nmap
 sudo apt-get install -y wget curl nmap && \
 # debug tools
-sudo apt-get install -y gdb gdbserver ltrace strace && \
+sudo apt-get install -y ltrace strace && \
 # x64 run x86 lib
 sudo apt-get install -y gcc-multilib g++-4.8-multilib && \
 # pip2
