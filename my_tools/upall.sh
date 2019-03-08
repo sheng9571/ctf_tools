@@ -7,8 +7,8 @@ sudo apt-get install -y python2.7 python-setuptools python-dev build-essential &
 sudo apt-get install -y python3 python3-setuptools python3-dev python3-pip python3-lxml && \
 # sudo、man、im、tmux、zsh、git、tar、zip、ssh
 sudo apt-get install -y sudo man vim tmux zsh git tar unzip openssh-server && \
-# wget、curl、nc、nmap
-sudo apt-get install -y wget curl nmap && \
+# wget、curl、nc、nmap、file
+sudo apt-get install -y wget curl nmap file && \
 # debug tools
 sudo apt-get install -y ltrace strace && \
 # x64 run x86 lib
