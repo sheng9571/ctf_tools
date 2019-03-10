@@ -91,14 +91,20 @@ res.append('nmap: %s' % nmap)
 cmd = 'gdb --version'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
 r = p.communicate()
-gdb = r[0].strip().split('\n')[0].split(' ')[4]
+gdb = r[0].strip().split('\n')[0].split(' ')[3]
 res.append('gdb: %s' % gdb)
 
 cmd = 'gdbserver --version'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
 r = p.communicate()
-gdbserver = r[0].strip().split('\n')[0].split(' ')[4]
+gdbserver = r[0].strip().split('\n')[0].split(' ')[3]
 res.append('gdbserver: %s' % gdbserver)
+
+cmd = '/usr/local/bin/qemu/qemu-x86_64-static --version'
+p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
+r = p.communicate()
+gdbserver = r[0].strip().split('\n')[0].split(' ')[2]
+res.append('QEMU: %s' % gdbserver)
 
 cmd = 'ltrace --version'
 p = Popen(cmd, stdout=PIPE, stderr=PIPE, stdin=PIPE, shell = True)
