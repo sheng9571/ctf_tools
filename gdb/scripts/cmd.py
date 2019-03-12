@@ -135,7 +135,14 @@ class cmd(gdb.Command):
         lst.append(tmp)
         tmp = {}
         
-        
+        # 17. highlight the specific chunk
+        tmp['name'] = 'highlight the specific chunk'
+        tmp['disc'] = 'highlight the specific chunk and show chunk information'
+        tmp['use'] = '{}chunk{} {}0x602000{}'.format(col_obj.yellow, col_obj.dft, col_obj.l_cyan, col_obj.dft)
+        lst.append(tmp)
+        tmp = {}
+
+
         for i in lst:
             print('{} - {} - usage: {}'.format(i['name'], i['disc'], i['use']) )
 
