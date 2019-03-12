@@ -33,7 +33,8 @@ sudo apt-get install -y libc6-armel-cross libc6-armhf-cross libc6-arm64-cross li
 # lxml requirements
 sudo apt-get install -y libxml2-dev libxslt-dev && \
 # Update Radare2
-cd ~/.ctf_tools/radare2/sys/ && ./install.sh && \
+rm -rf /opt/radare2 && mv ~/.ctf_tools/radare2 /opt/ && \
+cd /opt/radare2/sys/ && ./install.sh && cd ~ && \
 # update gdb plugins
 cp -rf ~/.ctf_tools/gdb ~/ && \
 # update gef
