@@ -70,8 +70,40 @@ class chunk(gdb.Command):
             # layout is different
             if (self.bit == '64'):
                 sign = 'g'
-                start_addr = head_addr - 0x40
-                end_addr = bottom_addr + 0x40 + 0x8
+                padding = 0x40
+                start_addr = head_addr
+                valid = False
+
+                # try to find upper bound address
+                for i in range(int((padding / 0x10))):
+                    start_addr -= 0x10
+                    try:
+                        cmd = 'x/2{}x {}'.format(sign, hex(start_addr))
+                        res = gdb.execute(cmd, to_string = True)
+                    except:
+                        start_addr += 0x10
+                        valid = True
+                        break
+
+                if (not valid): start_addr = head_addr - padding
+
+                end_addr = bottom_addr
+                valid = False
+
+                # try to find lower bound address
+                for i in range(int((padding / 0x10))):
+                    end_addr += 0x10
+                    try:
+                        cmd = 'x/2{}x {}'.format(sign, hex(start_addr))
+                        res = gdb.execute(cmd, to_string = True)
+                    except:
+                        end_addr -= 0x10
+                        valid = True
+                        break
+
+                if (not valid): end_addr = bottom_addr + padding + 0x8
+                else: end_addr += 0x8
+
                 cnt = int((end_addr - start_addr) / int(int(self.bit) / 8)) + 1
                 cmd = 'x/{}{}x {}'.format(cnt, sign, hex(start_addr))
                 res = gdb.execute(cmd, to_string = True)
@@ -102,8 +134,40 @@ class chunk(gdb.Command):
 
             elif (self.bit == '32'):
                 sign = 'w'
-                start_addr = head_addr - 0x20
-                end_addr = bottom_addr + 0x20 + 0x4
+                padding = 0x20
+                start_addr = head_addr
+                valid = False
+
+                # try to find upper bound address
+                for i in range(int((padding / 0x10))):
+                    start_addr -= 0x10
+                    try:
+                        cmd = 'x/2{}x {}'.format(sign, hex(start_addr))
+                        res = gdb.execute(cmd, to_string = True)
+                    except:
+                        start_addr += 0x10
+                        valid = True
+                        break
+
+                if (not valid): start_addr = head_addr - padding
+
+                end_addr = bottom_addr
+                valid = False
+
+                # try to find lower bound address
+                for i in range(int((padding / 0x10))):
+                    end_addr += 0x10
+                    try:
+                        cmd = 'x/2{}x {}'.format(sign, hex(start_addr))
+                        res = gdb.execute(cmd, to_string = True)
+                    except:
+                        end_addr -= 0x10
+                        valid = True
+                        break
+
+                if (not valid): end_addr = bottom_addr + padding + 0x4
+                else: end_addr += 0x4
+
                 cnt = int((end_addr - start_addr) / int(int(self.bit) / 8)) + 1
                 cmd = 'x/{}{}x {}'.format(cnt, sign, hex(start_addr))
                 res = gdb.execute(cmd, to_string = True)
@@ -150,6 +214,19 @@ class chunk(gdb.Command):
             print('Status: {}'.format(info['status']))
             if ('fd' in info): print('fd: {}'.format(info['fd']))
             if ('bk' in info): print('bk: {}'.format(info['bk']))
+            if (int(info['chunk_head_addr'], 16) > 0x80 and 'free' in info['status']):
+                print('-' * 44)
+                # unsafe_unlink detect
+                if ( int(info['fd'], 16) + 0x18 == int(info['bk'], 16) + 0x10 ):
+                    # meet the requirement
+                    print ('[{}*{}] unsafe_unlink attack condition is satisfied!\nwe will get {}{}{}!'.format(col_obj.orange, col_obj.dft, col_obj.orange, hex(int(info['fd'], 16) + 0x18), col_obj.dft))
+                else:
+                    print ('[{}!{}] unsafe_unlink attack condition isn\'t satisfied!\n{}{}{}(fd) + 0x18 != {}{}{}(bk) + 0x10!'.format(col_obj.red, col_obj.dft, col_obj.red, hex(int(info['fd'], 16)), col_obj.dft, col_obj.red, hex(int(info['bk'], 16)), col_obj.dft))
+                
+                
+                print('-' * 44)
+                # unsorted_bin attack detect
+                print ('[{}*{}] unsorted_bin attack detected!\nwe will get {}{}{}!'.format(col_obj.orange, col_obj.dft, col_obj.orange, hex(int(info['bk'], 16) + 0x10), col_obj.dft))
 
 
         except Exception as e:  print('Error Occurred: {}'.format(str(e)))
