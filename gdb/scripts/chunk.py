@@ -215,18 +215,25 @@ class chunk(gdb.Command):
             if ('fd' in info): print('fd: {}'.format(info['fd']))
             if ('bk' in info): print('bk: {}'.format(info['bk']))
             if (int(info['chunk_head_addr'], 16) > 0x80 and 'free' in info['status']):
+                if (self.bit == '64'):
+                    fd_ofst = 0x10
+                    bk_ofst = 0x18
+                elif (self.bit == '32'):
+                    fd_ofst = 0x8
+                    bk_ofst = 0xb
+
                 print('-' * 44)
                 # unsafe_unlink detect
-                if ( int(info['fd'], 16) + 0x18 == int(info['bk'], 16) + 0x10 ):
+                if ( int(info['fd'], 16) + bk_ofst == int(info['bk'], 16) + fd_ofst ):
                     # meet the requirement
-                    print ('[{}*{}] unsafe_unlink attack condition is satisfied!\nwe will get {}{}{}!'.format(col_obj.orange, col_obj.dft, col_obj.orange, hex(int(info['fd'], 16) + 0x18), col_obj.dft))
+                    print ('[{}*{}] unsafe_unlink attack condition is satisfied!\nwe will get {}{}{}!'.format(col_obj.orange, col_obj.dft, col_obj.orange, hex(int(info['fd'], 16) + bk_ofst), col_obj.dft))
                 else:
-                    print ('[{}!{}] unsafe_unlink attack condition isn\'t satisfied!\n{}{}{}(fd) + 0x18 != {}{}{}(bk) + 0x10!'.format(col_obj.red, col_obj.dft, col_obj.red, hex(int(info['fd'], 16)), col_obj.dft, col_obj.red, hex(int(info['bk'], 16)), col_obj.dft))
+                    print ('[{}!{}] unsafe_unlink attack condition isn\'t satisfied!\n{}{}{}(fd) + {} != {}{}{}(bk) + fd_ofst!'.format(col_obj.red, col_obj.dft, col_obj.red, hex(int(info['fd'], 16)), col_obj.dft, hex(bk_ofst), col_obj.red, hex(int(info['bk'], 16)), col_obj.dft, hex(fd_ofst)))
                 
                 
                 print('-' * 44)
                 # unsorted_bin attack detect
-                print ('[{}*{}] unsorted_bin attack detected!\nwe will get {}{}{}!'.format(col_obj.orange, col_obj.dft, col_obj.orange, hex(int(info['bk'], 16) + 0x10), col_obj.dft))
+                print ('[{}*{}] unsorted_bin attack detected!\nwe will get {}{}{}!'.format(col_obj.orange, col_obj.dft, col_obj.orange, hex(int(info['bk'], 16) + fd_ofst), col_obj.dft))
 
 
         except Exception as e:  print('Error Occurred: {}'.format(str(e)))
