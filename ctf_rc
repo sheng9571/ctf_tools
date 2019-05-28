@@ -86,6 +86,7 @@ function na86() {
         name="$(echo "$1" | cut -d'.' -f1)";
         nasm -f elf -o "$name".o $1;
         ld -m elf_i386 -o "$name" "$name".o;
+        rm -f "$name".o;
     else
         echo Must give one argument!
     fi
@@ -99,6 +100,7 @@ function na64() {
         name="$(echo "$1" | cut -d'.' -f1)";
         nasm -f elf64 -o "$name".o $1;
         ld -m elf_x86_64 -o "$name" "$name".o;
+        rm -f "$name".o;
     else
         echo Must give one argument!
     fi
